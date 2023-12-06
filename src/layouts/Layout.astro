@@ -18,24 +18,26 @@ import SideMenu from "../components/Side/SideMenu.astro";
   <head>
     <meta charset="UTF-8" />
     <meta
-      name="description"
-      content="Clone of Spotify with Astro View Transitions integration for fluid navigation"
+      name="AlqEx Exchange"
+      content="Trade Alq and Some Crypto Assets"
     />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title} | Spotify Astro</title>
+    <title>{title} | Trade Now </title>
     <meta property="og:image" content={image} />
     <meta name="twitter:image" content={image} />
     <ViewTransitions fallback="none" />
   </head>
   <body class="dark">
     <div class="relative h-screen p-2 gap-2 flex items-stretch">
+      
+      <div class="rounded-lg bg-zinc-900 flex-1 mx-auto overflow-y-auto">
+        <style>#dexscreener-embed{position:relative;width:100%;height: 100%;}@media(min-width:1400px){#dexscreener-embed{padding-bottom:10%;}}#dexscreener-embed iframe{position:absolute;width:100%;height:100%;top:0;left:0;border:0;}</style><div id="dexscreener-embed"><iframe src="https://dexscreener.com/bsc/0xb9081e31c419625E318eDcA4c89f071d643A94D0?embed=1&theme=dark&trades=0&info=0"></iframe></div>
+        <!-- <slot /> -->
+      </div>
       <div class="w-[350px] flex-col hidden lg:flex overflow-y-auto">
         <SideMenu />
-      </div>
-      <div class="rounded-lg bg-zinc-900 flex-1 mx-auto overflow-y-auto">
-        <slot />
       </div>
     </div>
     <div
