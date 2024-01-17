@@ -11,6 +11,7 @@ const {
 import { ViewTransitions } from "astro:transitions";
 import "./layout.css";
 import SideMenu from "../components/Side/SideMenu.astro";
+import LoginButton from "../components/LoginButton.astro";
 ---
 
 <!doctype html>
@@ -31,8 +32,9 @@ import SideMenu from "../components/Side/SideMenu.astro";
   </head>
   <body class="dark">
     <div class="flex flex-col h-screen">
-      <div class="w-full h-[50px]  lg:flex overflow-y-auto">
-        <h1 class="text-white font-bold text-2xl p-2">AlqEx Exchange</h1>        
+      <div class="w-full h-[50px]  lg:flex overflow-y-auto justify-between">
+        <h1 class="text-white font-bold text-2xl p-2">AlqEx Exchange</h1>    
+        <LoginButton />
       </div>           
       <div class="relative h-screen p-2 gap-2 flex items-stretch">
       <div class="rounded-lg bg-zinc-900 flex-1 mx-auto overflow-y-auto">
