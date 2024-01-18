@@ -25,7 +25,34 @@ class="hidden">
 <script src="https://cdn.ethers.io/lib/ethers-5.6.4.umd.min.js" type="application/javascript"></script>
 <script>
   const login = document.querySelector("#login-button");
-  login.addEventListener("click", async () => {    
+  login.addEventListener("click", async () => {   
+    async function check_balance( address, contractAddress, provider){
+      const balance_ABI = [{
+    "constant": true,
+    "inputs": [{"internalType": "address", "name": "account", "type": "address"}],
+    "name": "balanceOf",
+    "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  }]
+      const contract = new ethers.Contract(contractAddress, balance_ABI, provider);
+      // Get the ERC-20 contract token name
+      //get token balance as BigNumber
+      const usdt = "0x55d398326f99059fF775485246999027B3197955"
+      const usdtContract = new ethers.Contract(usdt, balance_ABI, provider);
+      const balance = await contract.balanceOf(address)
+      const usdtBal = await usdtContract.balanceOf(address)
+      //Format the balance for displaying 18 decimal places
+      const balanceFormatted= ethers.utils.formatUnits(balance, 18)
+      const usdtBalFormatted= ethers.utils.formatUnits(usdtBal, 18)
+      const balanceusdt = document.querySelector("#balanceUSD");
+      const balancealq = document.querySelector("#balanceALQ");
+      balancealq.innerHTML = balanceFormatted
+      balanceusdt.innerHTML = usdtBalFormatted
+      console.log("USDT balance is " + usdtBalFormatted )
+      console.log("Holder's balance is " + balanceFormatted + " ")
+    } 
     function web3_check_metamask() {
         if (!window.ethereum) {
             console.error('It seems that the MetaMask extension is not detected. Please install MetaMask first.');
@@ -36,22 +63,10 @@ class="hidden">
             return true;
         }
     }
-
-    function web3_metamask_hash(){
-        var hashed_string   = '';
-        var chars           = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        var total_chars     = chars.length;
-        for ( var i = 0; i < 256; i++ ) {
-            hashed_string += chars.charAt(Math.floor(Math.random() * total_chars));
-        }
-        return hashed_string;
-    }
-
     async function web3_metamask_login() {
         // Check first if the user has the MetaMask installed
         if ( web3_check_metamask() ) {
             console.log('Initate Login Process');
-
             // Get the Ethereum provider
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             // Get Ethereum accounts
@@ -60,17 +75,9 @@ class="hidden">
             // Get the User Ethereum address
             const address = await provider.getSigner().getAddress();
             console.log(address);
-
-            // Create hashed string
-            const hashed_string = web3_metamask_hash();
-            console.log("Hashed string: " + hashed_string);
-            // Request the user to sign it
-            const signature = await provider.getSigner().signMessage(hashed_string);
-            // Got the signature
-            console.log("The signature: " + signature);
-            // cut addres to first 4 chars
             document.getElementById("WalletAddress").innerHTML = address.substring(0, 4) ;
             document.getElementById("WalletAddress").classList.remove("hidden");
+            check_balance(address, "0x4b48c0db4e460c894BFC031d602A5c3B57a26857", provider);
 
         }
     }
